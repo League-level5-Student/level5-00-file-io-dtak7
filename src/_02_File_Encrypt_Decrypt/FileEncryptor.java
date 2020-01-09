@@ -2,6 +2,7 @@ package _02_File_Encrypt_Decrypt;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.swing.JOptionPane;
 
@@ -11,15 +12,44 @@ public class FileEncryptor {
 	// an encrypted form of the message to a file
 	public static void main(String[] args) {
 		String input = JOptionPane.showInputDialog("Enter a message");
-		for (int i = 0; i > input.length(); i++) {
-			
+		String newS = "";
+		String newerS ="";
+		String ncrpt ="";
+		String ncrptn="";
+		String ncrptd="";
+		String last ="";
+		String laster="";
+		if(input.contains("e")) {
+			newS = input.replace('e', '_');
 		}
+		if(newS.contains("t")) {
+			newerS =newS.replace('t', '^');
+		}
+		if(newerS.contains("s")) {
+			ncrpt = newerS.replace('s', '@');
+		}
+		if(ncrpt.contains("a")) {
+			ncrptn = ncrpt.replace('a', '*');
+		}
+		if(ncrptn.contains("o")) {
+			ncrptd = ncrptn.replace('o', '%');
+		}
+		if(ncrptd.contains("i")) {
+			last =ncrptd.replace('i', '#');
+		}
+		if(last.contains("n")) {
+			laster =last.replace('n', '$');
+		}
+			
+		
 		try {
-			FileWriter fw = new FileWriter("src/_01_File_Recorder/InputText.txt");
-			fw.write(input);
+			FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/test.txt");
+			fw.write(laster);
 			fw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 }
+
+
