@@ -43,7 +43,7 @@ public class FileEncryptor {
 			
 		
 		try {
-			FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/test.txt");
+			FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/SuperSecretInfo.txt");
 			fw.write(laster);
 			fw.close();
 		} catch (IOException e) {
