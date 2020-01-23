@@ -2,6 +2,11 @@ package _03_To_Do_List;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -37,7 +42,7 @@ public class ToDoList implements ActionListener{
 	 JButton viewT = new JButton();
 	 JButton removeT= new JButton();
 	 JButton saveL = new JButton();
-	 JButton loadL = new JButton();	
+	 JButton loadL = new JButton();
 	 public static void main(String[] args) {
 		 ToDoList tdl = new ToDoList();
 		tdl.frameSetUp();
@@ -53,11 +58,11 @@ public class ToDoList implements ActionListener{
 		frame.setVisible(true);
 		frame.setSize(600,100);
 		frame.setTitle("ToDoList");
-		addT.setText("add task");
-		viewT.setText("view task");
-		removeT.setText("remove task");
-		saveL.setText("save list");
-		loadL.setText("load list");
+		addT.setText("Add Task");
+		removeT.setText("Remove Task");
+		saveL.setText("Save List");
+		viewT.setText("View Task");
+		loadL.setText("Load List");
 		loadL.addActionListener(this);
 		saveL.addActionListener(this);
 		removeT.addActionListener(this);
@@ -70,21 +75,51 @@ public class ToDoList implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JButton buttonPressed = (JButton)e.getSource();
-		if(buttonPressed.getText().equals("add task")) {
+		if(buttonPressed.getText().equals("Add Task")) {
 			task =JOptionPane.showInputDialog("Enter in a task"); 
 			toDoList.add(task);
 		}
-		if(buttonPressed.getText().equals("view task")) {
+		if(buttonPressed.getText().equals("View Task")) {
 			System.out.println(toDoList);
 		}
-		if(buttonPressed.getText().equals("remove task")) {
+		if(buttonPressed.getText().equals("Remove Task")) {
 			String remove= JOptionPane.showInputDialog("Which task would you like to remove");
 			for(int i =0;i<toDoList.size();i++) {
-				if(toDoList.get(i).contains(remove)) {
+				if(toDoList.get(i).equals(remove)) {
 					toDoList.remove(i);
+				}
+			}
+		}
+		if(buttonPressed.getText().equals("Save List")) {
+			System.out.println("saving");
+			
+			try {
+				FileWriter fw = new FileWriter("src/_03_To_Do_List/List.txt");
+				for(int i =0;i<toDoList.size();i++) {
+				fw.write(toDoList.get(i));
+				}
+				fw.close(); 
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			}
+			if(buttonPressed.getText().equals("Load List")) {
+				try {
+					BufferedReader br = new BufferedReader(new FileReader("src/_03_To_Do_List/List.txt"));
+					
+					String line = br.readLine();
+					while(line != null){
+						JOptionPane.showMessageDialog(null, line);
+						line = br.readLine();
+					}
+					br.close();
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
 				}
 			}
 		}
 		
 	}
-}
+
