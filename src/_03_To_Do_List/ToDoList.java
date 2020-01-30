@@ -43,6 +43,7 @@ public class ToDoList implements ActionListener{
 	 JButton removeT= new JButton();
 	 JButton saveL = new JButton();
 	 JButton loadL = new JButton();
+	 boolean hasBeenSaved=false;
 	 public static void main(String[] args) {
 		 ToDoList tdl = new ToDoList();
 		tdl.frameSetUp();
@@ -80,7 +81,20 @@ public class ToDoList implements ActionListener{
 			toDoList.add(task);
 		}
 		if(buttonPressed.getText().equals("View Task")) {
-			System.out.println(toDoList);
+			try {
+				BufferedReader br = new BufferedReader(new FileReader("src/_03_To_Do_List/List.txt"));
+				
+				String line = br.readLine();
+				while(line != null){
+					JOptionPane.showMessageDialog(null, line);
+					line = br.readLine();
+				}
+				br.close();
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		if(buttonPressed.getText().equals("Remove Task")) {
 			String remove= JOptionPane.showInputDialog("Which task would you like to remove");
@@ -92,7 +106,7 @@ public class ToDoList implements ActionListener{
 		}
 		if(buttonPressed.getText().equals("Save List")) {
 			System.out.println("saving");
-			
+				hasBeenSaved=true;
 			try {
 				FileWriter fw = new FileWriter("src/_03_To_Do_List/List.txt");
 				for(int i =0;i<toDoList.size();i++) {
@@ -102,6 +116,7 @@ public class ToDoList implements ActionListener{
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
+			System.out.println("Saved");
 			}
 			if(buttonPressed.getText().equals("Load List")) {
 				try {
