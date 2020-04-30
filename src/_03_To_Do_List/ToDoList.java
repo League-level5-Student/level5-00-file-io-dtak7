@@ -41,7 +41,7 @@ public class ToDoList implements ActionListener{
 	 JButton addT = new JButton();
 	 JButton viewT = new JButton();
 	 JButton removeT= new JButton();
-	 JButton saveL = new JButton();
+	 //JButton saveL = new JButton();
 	 JButton loadL = new JButton();
 	 boolean hasBeenSaved=false;
 	 public static void main(String[] args) {
@@ -52,7 +52,7 @@ public class ToDoList implements ActionListener{
 	 void frameSetUp () {
 		frame.add(panel);
 		panel.add(loadL);
-		panel.add(saveL);
+		//panel.add(saveL);
 		panel.add(removeT);
 		panel.add(viewT);
 		panel.add(addT);
@@ -61,11 +61,11 @@ public class ToDoList implements ActionListener{
 		frame.setTitle("ToDoList");
 		addT.setText("Add Task");
 		removeT.setText("Remove Task");
-		saveL.setText("Save List");
+		//saveL.setText("Save List");
 		viewT.setText("View Task");
 		loadL.setText("Load List");
 		loadL.addActionListener(this);
-		saveL.addActionListener(this);
+		//saveL.addActionListener(this);
 		removeT.addActionListener(this);
 		viewT.addActionListener(this);
 		addT.addActionListener(this);
@@ -79,6 +79,19 @@ public class ToDoList implements ActionListener{
 		if(buttonPressed.getText().equals("Add Task")) {
 			task =JOptionPane.showInputDialog("Enter in a task"); 
 			toDoList.add(task);
+			System.out.println("saving");
+			hasBeenSaved=true;
+			String save=JOptionPane.showInputDialog("which list to you want to save to?");
+		try {
+			FileWriter fw = new FileWriter("src/_03_To_Do_List/"+save+".txt");
+			for(int i =0;i<toDoList.size();i++) {
+			fw.write(toDoList.get(i));
+			}
+			fw.close(); 
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		System.out.println("Saved");
 		}
 		if(buttonPressed.getText().equals("View Task")) {
 			try {
@@ -101,14 +114,29 @@ public class ToDoList implements ActionListener{
 			for(int i =0;i<toDoList.size();i++) {
 				if(toDoList.get(i).equals(remove)) {
 					toDoList.remove(i);
+					System.out.println("saving");
+					hasBeenSaved=true;
+					String save=JOptionPane.showInputDialog("which list to you want to save to?");
+				try {
+					FileWriter fw = new FileWriter("src/_03_To_Do_List/"+save+".txt");
+					for(int j =0;j<toDoList.size();j++) {
+					fw.write(toDoList.get(i));
+					}
+					fw.close(); 
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				System.out.println("Saved");
+					
 				}
 			}
 		}
-		if(buttonPressed.getText().equals("Save List")) {
+		/*if(buttonPressed.getText().equals("Save List")) {
 			System.out.println("saving");
 				hasBeenSaved=true;
+				String save=JOptionPane.showInputDialog("which list to you want to save to?");
 			try {
-				FileWriter fw = new FileWriter("src/_03_To_Do_List/List.txt");
+				FileWriter fw = new FileWriter("src/_03_To_Do_List/"+save+".txt");
 				for(int i =0;i<toDoList.size();i++) {
 				fw.write(toDoList.get(i));
 				}
@@ -117,10 +145,11 @@ public class ToDoList implements ActionListener{
 				e1.printStackTrace();
 			}
 			System.out.println("Saved");
-			}
+			}*/
 			if(buttonPressed.getText().equals("Load List")) {
+				String list =JOptionPane.showInputDialog("Which list would you like to load?");
 				try {
-					BufferedReader br = new BufferedReader(new FileReader("src/_03_To_Do_List/List.txt"));
+					BufferedReader br = new BufferedReader(new FileReader("src/_03_To_Do_List/"+list+".txt"));
 					
 					String line = br.readLine();
 					while(line != null){

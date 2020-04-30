@@ -10,7 +10,7 @@ public class FileRecorder {
 	public static void main(String[] args) {
 		String input =JOptionPane.showInputDialog("Enter a message");
 		try {
-			FileWriter fw = new FileWriter("s/Users/league1/Desktop/InputText.txt");
+			FileWriter fw = new FileWriter("src/_01_File_Recorder/InputText.txt");
 			fw.write(input);
 			fw.close(); 
 		} catch (IOException e) {
